@@ -1,15 +1,17 @@
 package dk.kyuff.pomlint.rules;
 
+import dk.kyuff.pomlint.DisableRule;
 import dk.kyuff.pomlint.Rule;
 import org.apache.maven.plugin.logging.Log;
 import org.apache.maven.project.MavenProject;
 
-public class PomDependencyRule implements Rule {
+public class PomDependencyRule extends DisableRule {
 
     private int size = 0;
 
     public boolean valid(MavenProject project) {
-        if ("pom".equals(project.getPackaging())) {
+        if ("pom".equals(project.getPackaging()) && project.getModules().size() > 0) {
+
             size = project.getDependencies().size();
             return size == 0;
         }
@@ -22,9 +24,9 @@ public class PomDependencyRule implements Rule {
 
     public void stateError(Log log) {
         if (size == 1) {
-            log.error("This is a pom module and have a dependency.");
+            log.error("This is a pom module with child modules. And have a dependency!");
         } else {
-            log.error(String.format("This is a pom module and have %d dependencies.", size));
+            log.error(String.format("This is a pom module with child modules. And it have %d dependencies!", size));
         }
         log.error("By having dependencies in a parent module it often becomes");
         log.error("very hard to maintain the sub-modules dependencies.");

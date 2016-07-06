@@ -1,10 +1,11 @@
 package dk.kyuff.pomlint.rules;
 
+import dk.kyuff.pomlint.DisableRule;
 import dk.kyuff.pomlint.Rule;
 import org.apache.maven.plugin.logging.Log;
 import org.apache.maven.project.MavenProject;
 
-public class DescriptionRule implements Rule {
+public class DescriptionRule extends DisableRule {
 
     public boolean valid(MavenProject project) {
         return project.getDescription() != null && !project.getDescription().trim().isEmpty();

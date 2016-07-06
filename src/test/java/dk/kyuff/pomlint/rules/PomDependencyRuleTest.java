@@ -22,6 +22,9 @@ public class PomDependencyRuleTest {
 
     @Mock
     List<Dependency> dependencies;
+    @Mock
+    List<String> modules;
+
     private MavenProject project;
     private String packaging;
 
@@ -38,6 +41,11 @@ public class PomDependencyRuleTest {
             public List<Dependency> getDependencies() {
                 return dependencies;
             }
+
+            @Override
+            public List<String> getModules() {
+                return modules;
+            }
         };
     }
 
@@ -45,26 +53,34 @@ public class PomDependencyRuleTest {
     public void pom_valid() throws Exception {
         // setup
         when(dependencies.size()).thenReturn(0);
+        when(modules.size()).thenReturn(0);
         packaging = "pom";
 
-        // execute
-        boolean valid = rule.valid(project);
+        // execute and verify
+        assertTrue(rule.valid(project));
+    }
 
-        // verify
-        assertTrue(valid);
+
+    @Test
+    public void pom_valid_no_sub_modules() throws Exception {
+        // setup
+        when(dependencies.size()).thenReturn(2);
+        when(modules.size()).thenReturn(0);
+        packaging = "pom";
+
+        // execute and verify
+        assertTrue(rule.valid(project));
     }
 
     @Test
     public void pom_invalid_dependency() throws Exception {
         // setup
         when(dependencies.size()).thenReturn(1);
+        when(modules.size()).thenReturn(1);
         packaging = "pom";
 
-        // execute
-        boolean valid = rule.valid(project);
-
-        // verify
-        assertFalse(valid);
+        // execute and verify
+        assertFalse(rule.valid(project));
     }
 
 
@@ -72,12 +88,10 @@ public class PomDependencyRuleTest {
     public void war_valid() throws Exception {
         // setup
         when(dependencies.size()).thenReturn(1);
+        when(modules.size()).thenReturn(1);
         packaging = "war";
 
-        // execute
-        boolean valid = rule.valid(project);
-
-        // verify
-        assertTrue(valid);
+        // execute and verify
+        assertTrue(rule.valid(project));
     }
 }

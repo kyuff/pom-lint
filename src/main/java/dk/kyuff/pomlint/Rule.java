@@ -10,4 +10,8 @@ public interface Rule {
     String getName();
 
     void stateError(Log log);
+
+    Rule setDisabled(boolean disabled);
+
+    boolean isDisabled();
 }

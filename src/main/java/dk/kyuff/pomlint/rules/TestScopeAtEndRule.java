@@ -1,6 +1,6 @@
 package dk.kyuff.pomlint.rules;
 
-import dk.kyuff.pomlint.Rule;
+import dk.kyuff.pomlint.DisableRule;
 import org.apache.maven.model.Dependency;
 import org.apache.maven.plugin.logging.Log;
 import org.apache.maven.project.MavenProject;
@@ -8,9 +8,10 @@ import org.apache.maven.project.MavenProject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TestScopeAtEndRule implements Rule {
+public class TestScopeAtEndRule extends DisableRule {
 
     private List<String> outOfOrder;
+
     public TestScopeAtEndRule() {
         outOfOrder = new ArrayList<String>();
     }

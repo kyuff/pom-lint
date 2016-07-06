@@ -2,6 +2,7 @@ package dk.kyuff.pomlint;
 
 import dk.kyuff.pomlint.rules.DescriptionRule;
 import dk.kyuff.pomlint.rules.PomDependencyRule;
+import dk.kyuff.pomlint.rules.PropertyNamingRule;
 import dk.kyuff.pomlint.rules.TestScopeAtEndRule;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
@@ -21,9 +22,10 @@ public class LintMojo extends SuperMojo {
     public void execute() throws MojoExecutionException {
 
         List<Rule> rules = Arrays.asList(
-                new DescriptionRule(),
-                new PomDependencyRule(),
-                new TestScopeAtEndRule()
+                new DescriptionRule().setDisabled(allowEmptyDescription),
+                new PomDependencyRule().setDisabled(allowDependenciesInPomModules),
+                new TestScopeAtEndRule().setDisabled(allowTestScopeDependenciesOutOfOrder),
+                new PropertyNamingRule().setDisabled(allowMixedPropertyNames)
         );
 
         List<Rule> failures = new ArrayList<Rule>();
@@ -39,7 +41,8 @@ public class LintMojo extends SuperMojo {
                 allValid = false;
                 failures.add(rule);
             }
-            getLog().info(String.format("\t%-45s : %s", rule.getName(), valid ? SUCCESS : FAILURE));
+            String status = rule.isDisabled() ? DISABLED : (valid ? SUCCESS : FAILURE);
+            getLog().info(String.format("\t%-45s : %s", rule.getName(), status));
         }
         getLog().info("\t----------------------------------------------------------------------");
         getLog().info(String.format("\t%s : Success, %s : Failure, %s : Disabled", SUCCESS, FAILURE, DISABLED));
@@ -47,9 +50,11 @@ public class LintMojo extends SuperMojo {
 
         if (!allValid) {
             for (Rule rule : failures) {
-                getLog().error(project.getGroupId() + ":" + project.getArtifactId() + ": " + rule.getName());
-                rule.stateError(getLog());
-                getLog().error("");
+                if (!rule.isDisabled()) {
+                    getLog().error(project.getGroupId() + ":" + project.getArtifactId() + ": " + rule.getName());
+                    rule.stateError(getLog());
+                    getLog().error("");
+                }
             }
         }
 
