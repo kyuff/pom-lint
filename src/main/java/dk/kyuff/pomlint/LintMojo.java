@@ -12,6 +12,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * The Lint goal verifies the project in the build. If rules are violated the build will fail
+ * unless running in dry mode. The rules violated will be described in the Maven error log
+ * making it easy for a build server to catch it and display the mistake in the build log.
+ */
 @Mojo(name = "lint", defaultPhase = LifecyclePhase.VALIDATE, threadSafe = true, aggregator = true)
 public class LintMojo extends SuperMojo {
 

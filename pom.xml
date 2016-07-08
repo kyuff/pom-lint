@@ -8,9 +8,44 @@
     <name>pomlint-maven-plugin Maven Mojo</name>
     <url>http://maven.apache.org</url>
 
-    <description>This is a nice description</description>
-    <dependencies>
+    <description>
+        The pomlint mojo helps enforcing a certain style in Maven projects.
 
+        This is particular useful in a multi-module project maintained by large teams
+        of developers. Often best practices are ignored when the project becomes busy.
+        This leads to pom structures that are hard to maintain and thus degrade the
+        projects agility. By having a linter enforce the rules upfront many of the simple
+        mistakes can be avoided.
+    </description>
+
+    <licenses>
+        <license>
+            <name>MIT License</name>
+            <url>http://www.opensource.org/licenses/mit-license.php</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <scm>
+        <url>https://github.com/kyuff/pomlint-maven-plugin</url>
+        <connection>scm:git:git://github.com/kyuff/pomlint-maven-plugin.git</connection>
+        <developerConnection>scm:git:git://github.com/kyuff/pomlint-maven-plugin.git</developerConnection>
+    </scm>
+
+    <developers>
+        <developer>
+            <email>soren.wiuff@gmail.com</email>
+            <name>Søren Kyndi-Wiuff</name>
+            <url>https://github.com/kyuff</url>
+            <id>kyuff</id>
+        </developer>
+    </developers>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <dependencies>
         <dependency>
             <groupId>org.apache.maven</groupId>
             <artifactId>maven-plugin-api</artifactId>
@@ -89,25 +124,6 @@
                 </configuration>
             </plugin>
             <plugin>
-                <groupId>dk.kyuff.pomlint</groupId>
-                <artifactId>pomlint-maven-plugin</artifactId>
-                <version>1.0-SNAPSHOT</version>
-                <configuration>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>pomlint</id>
-                        <goals>
-                            <goal>lint</goal>
-                        </goals>
-                        <configuration>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-
-
-            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-plugin-plugin</artifactId>
                 <version>3.4</version>
@@ -146,4 +162,29 @@
             </plugin>
         </plugins>
     </build>
+
+    <profiles>
+        <profile>
+            <id>lint</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>dk.kyuff.pomlint</groupId>
+                        <artifactId>pomlint-maven-plugin</artifactId>
+                        <version>${project.version}</version>
+                        <executions>
+                            <execution>
+                                <id>pomlint</id>
+                                <goals>
+                                    <goal>lint</goal>
+                                </goals>
+                                <configuration>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>
