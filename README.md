@@ -29,4 +29,18 @@ These rules are opinionated and based on experience with large projects.
             </plugins>
         </build>
         
-        
+# Rules
+
+Currently `pomlint-maven-plugin` supports four different rules:
+
+1. Empty Description
+TODO Descriptions needs to be specified.
+
+1. Inherent Dependency
+TODO No inherent dependencies.
+
+1. Mixed Property Names
+TODO No mixing property names!
+
+1. Test Scope Out Of Order
+TODO Test scopes should be at the end.
