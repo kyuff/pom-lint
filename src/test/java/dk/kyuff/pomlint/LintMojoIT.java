@@ -22,7 +22,7 @@ public class LintMojoIT {
         Verifier verifier = prepareProject("simple");
 
         // execute
-        verifier.executeGoal("install");
+        verifier.executeGoal("validate");
 
         // valid
         verifier.verifyErrorFreeLog();
@@ -35,7 +35,20 @@ public class LintMojoIT {
         Verifier verifier = prepareProject("multi-project");
 
         // execute
-        verifier.executeGoal("install");
+        verifier.executeGoal("validate");
+
+        // valid
+        verifier.verifyErrorFreeLog();
+
+    }
+
+    @Test(expected = VerificationException.class)
+    public void testNoDescriptionProject() throws Exception {
+        // prepare
+        Verifier verifier = prepareProject("no-description");
+
+        // execute
+        verifier.executeGoal("validate");
 
         // valid
         verifier.verifyErrorFreeLog();

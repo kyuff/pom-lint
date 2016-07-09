@@ -5,14 +5,15 @@ import dk.kyuff.pomlint.Rule;
 import org.apache.maven.plugin.logging.Log;
 import org.apache.maven.project.MavenProject;
 
-public class DescriptionRule extends DisableRule {
+public class EmptyDescriptionRule extends DisableRule {
 
     public boolean valid(MavenProject project) {
-        return project.getDescription() != null && !project.getDescription().trim().isEmpty();
+        String description = project.getOriginalModel().getDescription();
+        return description != null && !description.trim().isEmpty();
     }
 
     public String getName() {
-        return "Description present";
+        return "Empty Description";
     }
 
     public void stateError(Log log) {

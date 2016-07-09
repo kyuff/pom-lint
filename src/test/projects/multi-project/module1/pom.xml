@@ -12,6 +12,9 @@
     <artifactId>module1</artifactId>
     <packaging>jar</packaging>
     <name>module1</name>
+    <description>
+        Sub Module 1
+    </description>
 
     <dependencies>
         <dependency>

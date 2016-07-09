@@ -1,9 +1,9 @@
 package dk.kyuff.pomlint;
 
-import dk.kyuff.pomlint.rules.DescriptionRule;
-import dk.kyuff.pomlint.rules.PomDependencyRule;
-import dk.kyuff.pomlint.rules.PropertyNamingRule;
-import dk.kyuff.pomlint.rules.TestScopeAtEndRule;
+import dk.kyuff.pomlint.rules.EmptyDescriptionRule;
+import dk.kyuff.pomlint.rules.InherentDependencyRule;
+import dk.kyuff.pomlint.rules.MixedPropertyNamesRule;
+import dk.kyuff.pomlint.rules.TestScopeOutOfOrderRule;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
@@ -27,10 +27,10 @@ public class LintMojo extends SuperMojo {
     public void execute() throws MojoExecutionException {
 
         List<Rule> rules = Arrays.asList(
-                new DescriptionRule().setDisabled(allowEmptyDescription),
-                new PomDependencyRule().setDisabled(allowDependenciesInPomModules),
-                new TestScopeAtEndRule().setDisabled(allowTestScopeDependenciesOutOfOrder),
-                new PropertyNamingRule().setDisabled(allowMixedPropertyNames)
+                new EmptyDescriptionRule().setDisabled(allowEmptyDescription),
+                new InherentDependencyRule().setDisabled(allowInherentDependency),
+                new TestScopeOutOfOrderRule().setDisabled(allowTestScopeOutOfOrder),
+                new MixedPropertyNamesRule().setDisabled(allowMixedPropertyNames)
         );
 
         List<Rule> failures = new ArrayList<Rule>();
@@ -54,13 +54,16 @@ public class LintMojo extends SuperMojo {
         getLog().info("\t----------------------------------------------------------------------");
 
         if (!allValid) {
+            List<String> violations = new ArrayList<String>();
             for (Rule rule : failures) {
                 if (!rule.isDisabled()) {
                     getLog().error(project.getGroupId() + ":" + project.getArtifactId() + ": " + rule.getName());
                     rule.stateError(getLog());
                     getLog().error("");
+                    violations.add(rule.getName());
                 }
             }
+            throw new MojoExecutionException("These rules were violated: " + violations);
         }
 
 

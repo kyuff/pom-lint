@@ -16,9 +16,9 @@ import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class PomDependencyRuleTest {
+public class InherentDependencyRuleTest {
 
-    private PomDependencyRule rule;
+    private InherentDependencyRule rule;
 
     @Mock
     List<Dependency> dependencies;
@@ -30,7 +30,7 @@ public class PomDependencyRuleTest {
 
     @Before
     public void setUp() throws Exception {
-        rule = new PomDependencyRule();
+        rule = new InherentDependencyRule();
         project = new MavenProjectStub() {
             @Override
             public String getPackaging() {

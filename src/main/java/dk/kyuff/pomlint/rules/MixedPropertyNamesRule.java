@@ -4,7 +4,7 @@ import dk.kyuff.pomlint.DisableRule;
 import org.apache.maven.plugin.logging.Log;
 import org.apache.maven.project.MavenProject;
 
-public class PropertyNamingRule extends DisableRule {
+public class MixedPropertyNamesRule extends DisableRule {
 
 
     public boolean valid(MavenProject project) {

@@ -10,16 +10,16 @@ import java.util.Properties;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-public class PropertyNamingRuleTest {
+public class MixedPropertyNamesRuleTest {
 
     MavenProject project;
-    PropertyNamingRule rule;
+    MixedPropertyNamesRule rule;
 
     Properties properties;
 
     @Before
     public void setUp() throws Exception {
-        rule = new PropertyNamingRule();
+        rule = new MixedPropertyNamesRule();
         properties = new Properties();
         project = new MavenProjectStub() {
             @Override

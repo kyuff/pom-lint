@@ -29,15 +29,15 @@ public abstract class SuperMojo extends AbstractMojo {
      * structure as they have implicit requirements from parent
      * modules.
      */
-    @Parameter(defaultValue = "false", property = "allowDependenciesInPomModules")
-    boolean allowDependenciesInPomModules;
+    @Parameter(defaultValue = "false", property = "allowInherentDependency")
+    boolean allowInherentDependency;
 
     /**
      * Having test scope at the end helps maintain a better overview of all the
      * dependencies in the module.
      */
-    @Parameter(defaultValue = "false", property = "allowTestScopeDependenciesOutOfOrder")
-    boolean allowTestScopeDependenciesOutOfOrder;
+    @Parameter(defaultValue = "false", property = "allowTestScopeOutOfOrder")
+    boolean allowTestScopeOutOfOrder;
 
     /**
      * By mixing dotted and dashed naming conventions pom files become

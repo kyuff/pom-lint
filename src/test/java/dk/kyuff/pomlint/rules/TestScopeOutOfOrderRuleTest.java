@@ -13,10 +13,10 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 
-public class TestScopeAtEndRuleTest {
+public class TestScopeOutOfOrderRuleTest {
 
     private MavenProject project;
-    private TestScopeAtEndRule rule;
+    private TestScopeOutOfOrderRule rule;
     private List<Dependency> dependencies;
 
     @Before
@@ -27,7 +27,7 @@ public class TestScopeAtEndRuleTest {
                 return dependencies;
             }
         };
-        rule = new TestScopeAtEndRule();
+        rule = new TestScopeOutOfOrderRule();
     }
 
     @Test

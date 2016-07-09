@@ -5,7 +5,7 @@ import dk.kyuff.pomlint.Rule;
 import org.apache.maven.plugin.logging.Log;
 import org.apache.maven.project.MavenProject;
 
-public class PomDependencyRule extends DisableRule {
+public class InherentDependencyRule extends DisableRule {
 
     private int size = 0;
 
@@ -19,7 +19,7 @@ public class PomDependencyRule extends DisableRule {
     }
 
     public String getName() {
-        return "No dependency in POM modules";
+        return "Inherent Dependency";
     }
 
     public void stateError(Log log) {

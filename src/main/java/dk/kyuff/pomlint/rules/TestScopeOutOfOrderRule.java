@@ -8,11 +8,11 @@ import org.apache.maven.project.MavenProject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TestScopeAtEndRule extends DisableRule {
+public class TestScopeOutOfOrderRule extends DisableRule {
 
     private List<String> outOfOrder;
 
-    public TestScopeAtEndRule() {
+    public TestScopeOutOfOrderRule() {
         outOfOrder = new ArrayList<String>();
     }
 
