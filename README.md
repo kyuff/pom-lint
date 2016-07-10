@@ -44,3 +44,6 @@ TODO No mixing property names!
 
 1. Test Scope Out Of Order
 TODO Test scopes should be at the end.
+
+1. Module Name
+TODO Module names must match the artifactId
