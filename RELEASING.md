@@ -15,6 +15,3 @@ Next up, set the expected version
 Perform the release with:
 
     mvn clean deploy -Prelease
-
-
-
