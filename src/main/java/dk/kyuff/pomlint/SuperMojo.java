@@ -47,6 +47,15 @@ public abstract class SuperMojo extends AbstractMojo {
     @Parameter(defaultValue = "false", property = "allowMixedPropertyNames")
     boolean allowMixedPropertyNames;
 
+    /**
+     * It's a good idea to have the module name contain or be the artifactId.
+     * By enforcing this rule, it becomes easier to find the culprit when a single module fails
+     * in a large multi-module build. Often the alternative would be to have to do a text search in
+     * the pom.xml files to find the failing module.
+     */
+    @Parameter(defaultValue = "false", property = "allowModuleNamesToDiffer")
+    boolean allowModuleNamesToDiffer;
+
 
     /**
      * @param project the project to set

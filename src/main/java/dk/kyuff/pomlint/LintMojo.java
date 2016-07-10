@@ -1,9 +1,6 @@
 package dk.kyuff.pomlint;
 
-import dk.kyuff.pomlint.rules.EmptyDescriptionRule;
-import dk.kyuff.pomlint.rules.InherentDependencyRule;
-import dk.kyuff.pomlint.rules.MixedPropertyNamesRule;
-import dk.kyuff.pomlint.rules.TestScopeOutOfOrderRule;
+import dk.kyuff.pomlint.rules.*;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
@@ -30,7 +27,8 @@ public class LintMojo extends SuperMojo {
                 new EmptyDescriptionRule().setDisabled(allowEmptyDescription),
                 new InherentDependencyRule().setDisabled(allowInherentDependency),
                 new TestScopeOutOfOrderRule().setDisabled(allowTestScopeOutOfOrder),
-                new MixedPropertyNamesRule().setDisabled(allowMixedPropertyNames)
+                new MixedPropertyNamesRule().setDisabled(allowMixedPropertyNames),
+                new ModuleNameRule().setDisabled(allowModuleNamesToDiffer)
         );
 
         List<Rule> failures = new ArrayList<Rule>();
